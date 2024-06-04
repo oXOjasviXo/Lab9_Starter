@@ -88,13 +88,17 @@
   </main>
 
   <script>
+    let errors = [];
+    let firstNum = 0;
+    let secondNum = 0;
+    let operator = '';
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
       let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
+      firstNum = document.querySelector('#first-num').value;
+      secondNum = document.querySelector('#second-num').value;
+      operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
@@ -102,6 +106,10 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener('click', e => {
+      e.preventDefault();
+      console.log(firstNum);
+    });
   </script>
 </body>
 
