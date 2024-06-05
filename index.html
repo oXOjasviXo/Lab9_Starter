@@ -47,6 +47,15 @@
       width: 122px;
     }
   </style>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "8d00d2a09fdb4aa99aa6d91ee0353b92",
+      application: "lab-9"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
 </head>
 
 <body>
@@ -88,7 +97,15 @@
   </main>
 
   <script>
-    let errors = [];
+    //custom error
+    class DivisionByZeroError extends Error {
+      constructor() {
+        super("Division by zero error."); // Set a specific message for the error
+        this.name = "DivisionByZeroError";
+      }
+    }
+    // base functionality
+    let errors = ['a', 'b', 'c'];
     let firstNum = 0;
     let secondNum = 0;
     let operator = '';
@@ -99,6 +116,13 @@
       firstNum = document.querySelector('#first-num').value;
       secondNum = document.querySelector('#second-num').value;
       operator = document.querySelector('#operator').value;
+      try{
+        if(secondNum == 0 && operator == '/') {
+          throw new DivisionByZeroError();
+        }
+      } catch (e) {
+        console.error(e);
+      }
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
@@ -106,9 +130,44 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
-    errorBtns[0].addEventListener('click', e => {
-      e.preventDefault();
-      console.log(firstNum);
+    //log
+    errorBtns[0].addEventListener('click', () => console.log('Logged message: ', firstNum));
+    //error
+    errorBtns[1].addEventListener('click', () => console.error('Error message'));
+    //count
+    errorBtns[2].addEventListener('click', () => {
+      console.count('Counter');
+    });
+    //warn
+    errorBtns[3].addEventListener('click', () => console.warn('Warning message'));
+    //assert
+    errorBtns[4].addEventListener('click', () => console.assert(firstNum == 99, "firstNum is not 99"));
+    //clear
+    errorBtns[5].addEventListener('click', () => console.clear());
+    //dir
+    errorBtns[6].addEventListener('click', () => console.dir(document.querySelector('form')));
+    //dirxml
+    errorBtns[7].addEventListener('click', () => console.dirxml(document.querySelector('form')));
+    //start group
+    errorBtns[8].addEventListener('click', () => {
+      console.group('Example Group');
+      console.log('Inside Group');
+    });
+    //end group
+    errorBtns[9].addEventListener('click', () => console.groupEnd());
+    //table
+    errorBtns[10].addEventListener('click', () => console.table([{firstNum, secondNum, operator}]));
+    //start timer
+    errorBtns[11].addEventListener('click', () => console.time('Timer'));
+    //end timer
+    errorBtns[12].addEventListener('click', () => console.timeEnd('Timer'));
+    //trace
+    errorBtns[13].addEventListener('click', () => console.trace('Trace called'));
+    //global error
+    errorBtns[14].addEventListener('click', () => {
+        if(eroors.includes('d')) {
+          console.log('d in errors');
+        }
     });
   </script>
 </body>
